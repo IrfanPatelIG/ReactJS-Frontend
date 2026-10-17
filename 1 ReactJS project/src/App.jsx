@@ -7,6 +7,7 @@ function App() {
     <>
       <main>
         <h1>Irfan's React Frontend Project App</h1>
+        <h2>Welcome</h2>
       </main>
     </>
   )
