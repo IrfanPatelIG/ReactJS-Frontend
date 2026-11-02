@@ -5,7 +5,8 @@ function App() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    setError,
+    formState: { errors, isSubmitting, isSubmitSuccessful, isSubmitted },
   } = useForm();
 
   const delay = (d) => {
@@ -18,6 +19,10 @@ function App() {
 
   const onSubmit = async (data) => {
     await delay(2); // Simulating network delay
+    if (data.userName !== "Irfan") {
+      setError("myForm", {message: "Credentials are invalid!"});
+      return;
+    }
     console.log(data);
   }
 
@@ -25,7 +30,9 @@ function App() {
     <>
       <section className="center">
         {isSubmitting && <div>Loading..</div>}
+        {isSubmitSuccessful && <div className='green'>Form Submitted Successfully!</div>}
         <form onSubmit={handleSubmit(onSubmit)} >
+          {errors.myForm && <div className='red'>{errors?.myForm?.message}</div>}
           <input type="text" {...register('userName', { required: "User name is required", minLength: {value: 3, message: "Min length is 3", maxLength: {value: 8, message: "Max length is 8"}}})} />
           {<p className='red'>{errors.userName?.message}</p>}
 
